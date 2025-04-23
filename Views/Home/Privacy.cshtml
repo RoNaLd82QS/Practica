@@ -1,6 +1,28 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
-}
-<h1>@ViewData["Title"]</h1>
+﻿@model Pc1.Models.CambioViewModel
 
-<p>Use this page to detail your site's privacy policy.</p>
+@{
+    ViewData["Title"] = "Boleta";
+}
+
+<h2>Boleta de Cambio</h2>
+
+<p>Envías: <strong>@Model.Monto @Model.MonedaOrigen</strong></p>
+<p>Tasa de Cambio Aplicada: <strong>@Model.TasaCambio</strong></p>
+<p>Recibirás: <strong>@Model.MontoFinal @Model.MonedaDestino</strong></p>
+
+<h4>Datos del Cliente</h4>
+
+<form>
+    <div>
+        <label>Nombres y Apellidos:</label>
+        <input type="text" class="form-control" required />
+    </div>
+    <div>
+        <label>DNI o Pasaporte:</label>
+        <input type="text" class="form-control" required />
+    </div>
+    <div>
+        <label>Correo Electrónico:</label>
+        <input type="email" class="form-control" required />
+    </div>
+</form>
