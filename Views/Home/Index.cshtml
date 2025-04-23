@@ -1,8 +1,51 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Pc1.Models; // Asegúrate que esta ruta coincida con la ubicación de tu modelo
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+namespace Pc1.Controllers
+{
+    [Route("[controller]")]
+    public class CambioController : Controller
+    {
+        private readonly ILogger<CambioController> _logger;
+
+        public CambioController(ILogger<CambioController> logger)
+        {
+            _logger = logger;
+        }
+
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Index(CambioViewModel model)
+        {
+            // Asignar tasa de cambio fija por ahora
+            if (model.MonedaOrigen == "BRL" && model.MonedaDestino == "PEN")
+            {
+                model.TasaCambio = 0.74m;
+            }
+            else
+            {
+                model.TasaCambio = 1.00m; // Default en caso de error
+            }
+
+            return RedirectToAction("Boleta", model);
+        }
+
+        [HttpGet]
+        public IActionResult Boleta(CambioViewModel model)
+        {
+            return View(model);
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View("Error!");
+        }
+    }
+}
